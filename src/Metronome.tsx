@@ -173,7 +173,7 @@ export default function Metronome() {
             Time Signuture
           </h1>
 
-          {Array.from({ length: 7 }, (el, index) => (
+          {Array.from({ length: 7 }, (_el, index) => (
             <div
               className="flex w-full gap-2 text-lg font-bold"
               key={index}
