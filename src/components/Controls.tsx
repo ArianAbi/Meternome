@@ -3,9 +3,8 @@ import {
   type ChangeEvent,
   type Dispatch,
   type SetStateAction,
-  useEffect,
-} from 'react';
-import useClamp from '../hooks/useClamp';
+} from "react";
+import useClamp from "../hooks/useClamp";
 
 interface Controls {
   tempo: number;
@@ -43,7 +42,7 @@ export default function Controls({
     });
   }
 
-  function handleTapTempo() {
+  function HandleTapTempo() {
     setPrevNow(Date.now());
     setTappedTempo(Date.now() - prevNow);
 
@@ -87,7 +86,7 @@ export default function Controls({
               <p>tempo : {tempo}</p>
             </div>
 
-            <button className="bg-cyan-600 px-6 py-2" onClick={handleTapTempo}>
+            <button className="bg-cyan-600 px-6 py-2" onClick={HandleTapTempo}>
               Tap Tempo
             </button>
           </div>

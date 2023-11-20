@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from "react";
+import { settingCtx } from "../App";
 
 export type userPreference = {
-  sound: 'sound1' | 'sound2' | 'sound3';
+  sound: "sound1" | "sound2" | "sound3";
   backgroundTick: boolean;
   onlyTickOnAccents: boolean;
   regularTickBgColor: string;
@@ -11,17 +12,16 @@ export type userPreference = {
 };
 
 export default function Settings() {
-  const [sound, setSound] = useState('sound1');
+  const setting = useContext(settingCtx);
+
+  const [sound, setSound] = useState("sound1");
   const [backgroundTick, setBackgroundTick] = useState(false);
   const [onlyTickOnAccents, setOnlyTickOnAccents] = useState(false);
 
-  const [regularTickBgColor, setRegularTickBgColor] = useState('#5f5faf');
-  const [accentTickBgColor, setAccentTickBgColor] = useState('#fd4444');
+  const [regularTickBgColor, setRegularTickBgColor] = useState("#5f5faf");
+  const [accentTickBgColor, setAccentTickBgColor] = useState("#fd4444");
 
-  const [regularTickBgEnabled, setRegularTickBgEnabled] = useState(true);
-  const [accentTickBgٍEnabled, setAccentTickBgEnabled] = useState(true);
-
-  function handleSoundChange(sound: 'sound1' | 'sound2' | 'sound3') {
+  function handleSoundChange(sound: "sound1" | "sound2" | "sound3") {
     setSound(sound);
   }
 
@@ -31,14 +31,12 @@ export default function Settings() {
     onlyTickOnAccents,
     regularTickBgColor,
     accentTickBgColor,
-    regularTickBgEnabled,
-    accentTickBgٍEnabled,
   };
 
   // apply the saved preference if it exsists
   useEffect(() => {
-    if (localStorage.getItem('userPreference')) {
-      const preferenceStringy = localStorage.getItem('userPreference');
+    if (localStorage.getItem("userPreference")) {
+      const preferenceStringy = localStorage.getItem("userPreference");
       if (!preferenceStringy) {
         return;
       }
@@ -49,16 +47,24 @@ export default function Settings() {
       setBackgroundTick(preference.backgroundTick);
       setOnlyTickOnAccents(preference.onlyTickOnAccents);
       setAccentTickBgColor(preference.accentTickBgColor);
-      setAccentTickBgEnabled(preference.accentTickBgٍEnabled);
       setRegularTickBgColor(preference.regularTickBgColor);
-      setRegularTickBgEnabled(preference.regularTickBgEnabled);
     }
   }, []);
 
   useEffect(() => {
+    if (setting) {
+      setting.updateValue(userPreference as userPreference);
+    }
+
     const stringifyPreference = JSON.stringify(userPreference);
-    localStorage.setItem('userPreference', stringifyPreference);
-  }, [userPreference]);
+    localStorage.setItem("userPreference", stringifyPreference);
+  }, [
+    sound,
+    backgroundTick,
+    onlyTickOnAccents,
+    accentTickBgColor,
+    regularTickBgColor,
+  ]);
 
   return (
     <>
@@ -68,39 +74,39 @@ export default function Settings() {
             <h2 className="mb-2 text-base font-semibold">Tick Sound</h2>
             <li
               className="ml-4 flex gap-1"
-              onClick={() => handleSoundChange('sound1')}
+              onClick={() => handleSoundChange("sound1")}
             >
               <input
                 type="radio"
                 name="tickSound"
                 value="sound1"
-                checked={sound === 'sound1'}
+                checked={sound === "sound1"}
                 readOnly
               />
               <label>Tick Sound 1</label>
             </li>
             <li
               className="ml-4 flex gap-1"
-              onClick={() => handleSoundChange('sound2')}
+              onClick={() => handleSoundChange("sound2")}
             >
               <input
                 type="radio"
                 name="tickSound"
                 value="sound2"
-                checked={sound === 'sound2'}
+                checked={sound === "sound2"}
                 readOnly
               />
               <label>Tick Sound 2</label>
             </li>
             <li
               className="ml-4 flex gap-1"
-              onClick={() => handleSoundChange('sound3')}
+              onClick={() => handleSoundChange("sound3")}
             >
               <input
                 type="radio"
                 name="tickSound"
                 value="sound3"
-                checked={sound === 'sound3'}
+                checked={sound === "sound3"}
                 readOnly
               />
               <label>Tick Sound 3</label>
@@ -121,7 +127,7 @@ export default function Settings() {
 
           <div
             className={`ml-4 flex gap-1 ${
-              !backgroundTick ? 'text-gray-400' : ''
+              !backgroundTick ? "text-gray-400" : ""
             }`}
             onClick={() => setOnlyTickOnAccents((prev) => !prev)}
           >
@@ -137,51 +143,33 @@ export default function Settings() {
             <div className="flex flex-col items-center justify-center gap-1">
               <h2
                 className={`font-semibold ${
-                  !accentTickBgٍEnabled ? 'text-gray-400' : ''
+                  !backgroundTick ? "text-gray-400" : ""
                 }`}
               >
                 Accent Color
               </h2>
               <input
-                disabled={!accentTickBgٍEnabled}
+                disabled={!backgroundTick}
                 type="color"
                 value={accentTickBgColor}
                 onChange={(e) => setAccentTickBgColor(e.target.value)}
               />
-
-              <div onClick={() => setAccentTickBgEnabled((prev) => !prev)}>
-                <input
-                  type="checkbox"
-                  checked={accentTickBgٍEnabled}
-                  readOnly
-                />
-                <span className="ml-1">Enabled</span>
-              </div>
             </div>
 
             <div className="flex flex-col items-center justify-center gap-1">
               <h2
                 className={`font-semibold ${
-                  !regularTickBgEnabled ? 'text-gray-400' : ''
+                  !backgroundTick ? "text-gray-400" : ""
                 }`}
               >
                 Regular Color
               </h2>
               <input
-                disabled={!regularTickBgEnabled}
+                disabled={!backgroundTick}
                 type="color"
                 value={regularTickBgColor}
                 onChange={(e) => setRegularTickBgColor(e.target.value)}
               />
-
-              <div onClick={() => setRegularTickBgEnabled((prev) => !prev)}>
-                <input
-                  type="checkbox"
-                  checked={regularTickBgEnabled}
-                  readOnly
-                />
-                <span className="ml-1">Enabled</span>
-              </div>
             </div>
           </div>
         </div>

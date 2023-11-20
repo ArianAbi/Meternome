@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import type { Dispatch, FC, ReactNode, SetStateAction } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 interface DialogBox {
   open: boolean;
@@ -26,7 +26,7 @@ export default function DialogBox({ open, setOpen, children }: DialogBox) {
           >
             <motion.div
               className="flex flex-col items-center justify-center gap-3 rounded-md bg-black bg-opacity-95 px-4 pb-6 pt-4"
-              style={{ boxShadow: '0px 0px 5px 2px #ffffff5a' }}
+              style={{ boxShadow: "0px 0px 5px 2px #ffffff5a" }}
               initial={{ scale: 0.2 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
