@@ -111,6 +111,21 @@ export default function Metronome() {
     }
   }
 
+  function getTheLightness(tickCount: number) {
+    let brightness = 100;
+    let decreaseAmount = 0;
+
+    const decreaseStep = 100 / (timeSigniture + 1);
+
+    if (tickCount != 1) {
+      decreaseAmount = Math.floor(decreaseStep * tickCount - decreaseStep * 2);
+    }
+
+    console.log(decreaseAmount);
+
+    return `${brightness - decreaseAmount}%`;
+  }
+
   return (
     <>
       {/* background tick */}
@@ -122,6 +137,9 @@ export default function Metronome() {
             className="absolute left-0 top-0 h-full w-full"
             style={{
               background: getTickBackground(setting.value),
+
+              // decrease the lightness of the background with every tick
+              filter: `brightness(${getTheLightness(tickCount)})`,
             }}
           ></div>
         )}
