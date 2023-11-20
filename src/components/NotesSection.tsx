@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from "react";
 
 interface NotesSection {
   setTimeSignuture: Dispatch<SetStateAction<boolean>>;
@@ -40,7 +40,7 @@ export default function NotesSection({
           <span>4</span>
         </button>
 
-        {Array.from({ length: timeSignuture }, (el, index) => (
+        {Array.from({ length: timeSignuture }, (_el, index) => (
           <div
             className="relative my-2 px-0 text-center text-white"
             key={index}
