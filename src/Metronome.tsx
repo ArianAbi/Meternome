@@ -126,7 +126,7 @@ export default function Metronome() {
           ></div>
         )}
 
-      <div className="mx-auto flex h-screen max-w-screen-md flex-col items-center">
+      <div className="mx-auto flex h-[100svh] max-w-screen-md flex-col items-center">
         {/* title */}
         <header className="z-50 mb-2 flex w-full items-center justify-between px-4 py-3 text-center text-xl font-bold">
           <a href="https://github.com/ArianAbi/Metronome" title="github page">
