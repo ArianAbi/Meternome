@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import rideSample from "/samples/ride/new-ride.wav";
 import rideSampleAccent from "/samples/ride/new-ride-accent.wav";
 import Controls from "./components/Controls";
@@ -6,8 +6,11 @@ import { Pendulum, PendulumContainer } from "./components/Pendulum";
 import DialogBox from "./components/DialogBox";
 import NotesSection from "./components/NotesSection";
 import Settings, { type userPreference } from "./components/Settings";
+import { settingCtx } from "./App";
 
 export default function Metronome() {
+  const setting = useContext(settingCtx);
+
   const minTempo = 20;
   const maxTempo = 320;
 
@@ -111,14 +114,17 @@ export default function Metronome() {
   return (
     <>
       {/* background tick */}
-      {/* {settings && settings.backgroundTick && tickCount > 0 && (
-        <div
-          className="absolute left-0 top-0 h-full w-full"
-          style={{
-            background: getTickBackground(settings),
-          }}
-        ></div>
-      )} */}
+      {setting &&
+        setting.value &&
+        setting.value.backgroundTick &&
+        tickCount > 0 && (
+          <div
+            className="absolute left-0 top-0 h-full w-full"
+            style={{
+              background: getTickBackground(setting.value),
+            }}
+          ></div>
+        )}
 
       <div className="mx-auto flex h-screen max-w-screen-md flex-col items-center">
         {/* title */}
