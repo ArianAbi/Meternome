@@ -121,8 +121,6 @@ export default function Metronome() {
       decreaseAmount = Math.floor(decreaseStep * tickCount - decreaseStep * 2);
     }
 
-    console.log(decreaseAmount);
-
     return `${brightness - decreaseAmount}%`;
   }
 
