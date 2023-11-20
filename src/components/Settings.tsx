@@ -7,19 +7,25 @@ export type userPreference = {
   onlyTickOnAccents: boolean;
   regularTickBgColor: string;
   accentTickBgColor: string;
-  regularTickBgEnabled: boolean;
-  accentTickBgٍEnabled: boolean;
 };
 
 export default function Settings() {
   const setting = useContext(settingCtx);
 
-  const [sound, setSound] = useState("sound1");
-  const [backgroundTick, setBackgroundTick] = useState(false);
-  const [onlyTickOnAccents, setOnlyTickOnAccents] = useState(false);
+  const [sound, setSound] = useState(setting ? setting.value?.sound : "sound1");
+  const [backgroundTick, setBackgroundTick] = useState(
+    setting ? setting.value?.backgroundTick : false
+  );
+  const [onlyTickOnAccents, setOnlyTickOnAccents] = useState(
+    setting ? setting.value?.onlyTickOnAccents : false
+  );
 
-  const [regularTickBgColor, setRegularTickBgColor] = useState("#5f5faf");
-  const [accentTickBgColor, setAccentTickBgColor] = useState("#fd4444");
+  const [regularTickBgColor, setRegularTickBgColor] = useState(
+    setting ? setting.value?.regularTickBgColor : "#5f5faf"
+  );
+  const [accentTickBgColor, setAccentTickBgColor] = useState(
+    setting ? setting.value?.accentTickBgColor : "#fd4444"
+  );
 
   function handleSoundChange(sound: "sound1" | "sound2" | "sound3") {
     setSound(sound);
@@ -32,24 +38,6 @@ export default function Settings() {
     regularTickBgColor,
     accentTickBgColor,
   };
-
-  // apply the saved preference if it exsists
-  useEffect(() => {
-    if (localStorage.getItem("userPreference")) {
-      const preferenceStringy = localStorage.getItem("userPreference");
-      if (!preferenceStringy) {
-        return;
-      }
-
-      const preference: userPreference = JSON.parse(preferenceStringy);
-
-      setSound(preference.sound);
-      setBackgroundTick(preference.backgroundTick);
-      setOnlyTickOnAccents(preference.onlyTickOnAccents);
-      setAccentTickBgColor(preference.accentTickBgColor);
-      setRegularTickBgColor(preference.regularTickBgColor);
-    }
-  }, []);
 
   useEffect(() => {
     if (setting) {
