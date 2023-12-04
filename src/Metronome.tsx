@@ -181,7 +181,7 @@ export default function Metronome() {
 
         {/* settings dialog box */}
         <DialogBox open={settingDialogOpen} setOpen={setSettingDialogOpen}>
-          <h1 className="mb-4 text-lg font-bold tracking-wide">Settings</h1>
+          <span className="mb-4 text-lg font-bold tracking-wide">Settings</span>
 
           <Settings />
         </DialogBox>
