@@ -1,0 +1,447 @@
+.active-bar {
+  --width: 5px;
+  --border-radius: 10px;
+  --duration: 2s;
+
+  position: relative;
+  background-origin: center;
+}
+
+.active-bar::before {
+  --deg: 0deg;
+
+  content: "";
+  z-index: -2;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: var(--border-radius);
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 140%;
+
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    var(--deg),
+    rgba(0, 0, 0, 0) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+
+  animation: active-bg var(--duration) linear infinite;
+}
+
+.active-bar::after {
+  content: "";
+  z-index: -2;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: var(--border-radius);
+  transform: translate(-50%, -50%);
+  width: calc(100% - var(--width));
+  height: calc(140% - var(--width));
+  background-color: var(--bg-color);
+}
+
+@keyframes active-bg {
+  1% {
+    --deg: 3deg;
+  }
+
+  2% {
+    --deg: 7deg;
+  }
+
+  3% {
+    --deg: 10deg;
+  }
+
+  4% {
+    --deg: 14deg;
+  }
+
+  5% {
+    --deg: 18deg;
+  }
+
+  6% {
+    --deg: 21deg;
+  }
+
+  7% {
+    --deg: 25deg;
+  }
+
+  8% {
+    --deg: 28deg;
+  }
+
+  9% {
+    --deg: 32deg;
+  }
+
+  10% {
+    --deg: 36deg;
+  }
+
+  11% {
+    --deg: 39deg;
+  }
+
+  12% {
+    --deg: 43deg;
+  }
+
+  13% {
+    --deg: 46deg;
+  }
+
+  14% {
+    --deg: 50deg;
+  }
+
+  15% {
+    --deg: 54deg;
+  }
+
+  16% {
+    --deg: 57deg;
+  }
+
+  17% {
+    --deg: 61deg;
+  }
+
+  18% {
+    --deg: 64deg;
+  }
+
+  19% {
+    --deg: 68deg;
+  }
+
+  20% {
+    --deg: 72deg;
+  }
+
+  21% {
+    --deg: 75deg;
+  }
+
+  22% {
+    --deg: 79deg;
+  }
+
+  23% {
+    --deg: 82deg;
+  }
+
+  24% {
+    --deg: 86deg;
+  }
+
+  25% {
+    --deg: 90deg;
+  }
+
+  26% {
+    --deg: 93deg;
+  }
+
+  27% {
+    --deg: 97deg;
+  }
+
+  28% {
+    --deg: 100deg;
+  }
+
+  29% {
+    --deg: 104deg;
+  }
+
+  30% {
+    --deg: 108deg;
+  }
+
+  31% {
+    --deg: 111deg;
+  }
+
+  32% {
+    --deg: 115deg;
+  }
+
+  33% {
+    --deg: 118deg;
+  }
+
+  34% {
+    --deg: 122deg;
+  }
+
+  35% {
+    --deg: 126deg;
+  }
+
+  36% {
+    --deg: 129deg;
+  }
+
+  37% {
+    --deg: 133deg;
+  }
+
+  38% {
+    --deg: 136deg;
+  }
+
+  39% {
+    --deg: 140deg;
+  }
+
+  40% {
+    --deg: 144deg;
+  }
+
+  41% {
+    --deg: 147deg;
+  }
+
+  42% {
+    --deg: 151deg;
+  }
+
+  43% {
+    --deg: 154deg;
+  }
+
+  44% {
+    --deg: 158deg;
+  }
+
+  45% {
+    --deg: 162deg;
+  }
+
+  46% {
+    --deg: 165deg;
+  }
+
+  47% {
+    --deg: 169deg;
+  }
+
+  48% {
+    --deg: 172deg;
+  }
+
+  49% {
+    --deg: 176deg;
+  }
+
+  50% {
+    --deg: 180deg;
+  }
+
+  51% {
+    --deg: 183deg;
+  }
+
+  52% {
+    --deg: 187deg;
+  }
+
+  53% {
+    --deg: 190deg;
+  }
+
+  54% {
+    --deg: 194deg;
+  }
+
+  55% {
+    --deg: 198deg;
+  }
+
+  56% {
+    --deg: 201deg;
+  }
+
+  57% {
+    --deg: 205deg;
+  }
+
+  58% {
+    --deg: 208deg;
+  }
+
+  59% {
+    --deg: 212deg;
+  }
+
+  60% {
+    --deg: 216deg;
+  }
+
+  61% {
+    --deg: 219deg;
+  }
+
+  62% {
+    --deg: 223deg;
+  }
+
+  63% {
+    --deg: 226deg;
+  }
+
+  64% {
+    --deg: 230deg;
+  }
+
+  65% {
+    --deg: 234deg;
+  }
+
+  66% {
+    --deg: 237deg;
+  }
+
+  67% {
+    --deg: 241deg;
+  }
+
+  68% {
+    --deg: 244deg;
+  }
+
+  69% {
+    --deg: 248deg;
+  }
+
+  70% {
+    --deg: 252deg;
+  }
+
+  71% {
+    --deg: 255deg;
+  }
+
+  72% {
+    --deg: 259deg;
+  }
+
+  73% {
+    --deg: 262deg;
+  }
+
+  74% {
+    --deg: 266deg;
+  }
+
+  75% {
+    --deg: 270deg;
+  }
+
+  76% {
+    --deg: 273deg;
+  }
+
+  77% {
+    --deg: 277deg;
+  }
+
+  78% {
+    --deg: 280deg;
+  }
+
+  79% {
+    --deg: 284deg;
+  }
+
+  80% {
+    --deg: 288deg;
+  }
+
+  81% {
+    --deg: 291deg;
+  }
+
+  82% {
+    --deg: 295deg;
+  }
+
+  83% {
+    --deg: 298deg;
+  }
+
+  84% {
+    --deg: 302deg;
+  }
+
+  85% {
+    --deg: 306deg;
+  }
+
+  86% {
+    --deg: 309deg;
+  }
+
+  87% {
+    --deg: 313deg;
+  }
+
+  88% {
+    --deg: 316deg;
+  }
+
+  89% {
+    --deg: 320deg;
+  }
+
+  90% {
+    --deg: 324deg;
+  }
+
+  91% {
+    --deg: 327deg;
+  }
+
+  92% {
+    --deg: 331deg;
+  }
+
+  93% {
+    --deg: 334deg;
+  }
+
+  94% {
+    --deg: 338deg;
+  }
+
+  95% {
+    --deg: 342deg;
+  }
+
+  96% {
+    --deg: 345deg;
+  }
+
+  97% {
+    --deg: 349deg;
+  }
+
+  98% {
+    --deg: 352deg;
+  }
+
+  99% {
+    --deg: 356deg;
+  }
+
+  100% {
+    --deg: 360deg;
+  }
+}

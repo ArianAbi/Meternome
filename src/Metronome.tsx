@@ -1,10 +1,8 @@
 import { useState, useEffect, useContext } from "react";
-import rideSample from "/samples/ride/new-ride.wav";
-import rideSampleAccent from "/samples/ride/new-ride-accent.wav";
 import Controls from "./components/Controls";
 import { Pendulum, PendulumContainer } from "./components/Pendulum";
 import DialogBox from "./components/DialogBox";
-import NotesSection from "./components/NotesSection";
+import BarsSection from "./components/BarsSection";
 import Settings, { type userPreference } from "./components/Settings";
 import { settingCtx } from "./App";
 
@@ -16,25 +14,18 @@ export default function Metronome() {
 
   const [metronome, setMetronome] = useState<null | number>(null);
   const [pendulumWeightPosition, setPendulumWeightPosition] = useState(0);
+
   const [tickCount, setTickCount] = useState(0);
+
   const [tempo, setTempo] = useState(120);
   const [bars, setBars] = useState(0);
-  const [timeSigniture, setTimeSignuture] = useState(4);
 
-  const [metronomeSound, setMetronomeSound] = useState<HTMLAudioElement>();
-  const [metronomeAccentSound, setMetronomeAccentSound] =
-    useState<HTMLAudioElement>();
+  const [timeSigniture, setTimeSignuture] = useState(4);
   const [timeSigDialogOpen, setTimeSigDialogOpen] = useState(false);
   const [settingDialogOpen, setSettingDialogOpen] = useState(false);
 
   const msInMinute = 60000;
   const tickDuration = msInMinute / tempo;
-
-  //set the audios
-  useEffect(() => {
-    setMetronomeSound(new Audio(rideSample));
-    setMetronomeAccentSound(new Audio(rideSampleAccent));
-  }, []);
 
   //on tempo or time signuture change update the interval
   useEffect(() => {
@@ -82,24 +73,6 @@ export default function Metronome() {
   function handleTimeSignutureChange(timeSigniture: number) {
     setTimeSignuture(timeSigniture);
   }
-
-  //on tick count change play a sound
-  useEffect(() => {
-    //dont do anything if metronome is not toggled
-    if (!metronome || !metronomeSound || !metronomeAccentSound) {
-      return;
-    }
-
-    if (tickCount === 1) {
-      metronomeSound.pause();
-      metronomeSound.currentTime = 0;
-      metronomeSound.play();
-    } else {
-      metronomeAccentSound.pause();
-      metronomeAccentSound.currentTime = 0;
-      metronomeAccentSound.play();
-    }
-  }, [tickCount]);
 
   function getTickBackground(settings: userPreference) {
     if (tickCount === 1) {
@@ -206,15 +179,16 @@ export default function Metronome() {
                 readOnly
               />
               <label title={`${index + 2}`}>{index + 2}</label>
-              <img src="/quarter-note.svg" className="h-5" />
+              <img src="/quarter-notes.png" className="h-5" />
             </div>
           ))}
         </DialogBox>
 
-        <NotesSection
+        <BarsSection
           timeSignuture={timeSigniture}
           setTimeSignuture={setTimeSigDialogOpen}
           tickCount={tickCount}
+          tempo={tempo}
         />
 
         {/* bar counter */}
