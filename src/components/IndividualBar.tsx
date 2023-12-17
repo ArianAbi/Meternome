@@ -16,6 +16,7 @@ export default function IndividualBar({
   tempo,
 }: IndividualBar) {
   const playRef = useRef<null | CallableFunction>(null);
+  const [accented, setAccented] = useState(index == 0 ? true : false);
 
   //set up the tick
   useEffect(() => {
@@ -128,6 +129,10 @@ export default function IndividualBar({
     }
   }, [tickCount]);
 
+  function toggleAccented() {
+    setAccented((prev) => !prev);
+  }
+
   return (
     <>
       <button
@@ -137,6 +142,24 @@ export default function IndividualBar({
         }`}
         key={index}
       >
+        {/* if accented show a mark */}
+        {accented && (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="w-3 h-3 scale-x-[4] absolute -top-3 left-2/4 -translate-x-2/4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        )}
+
         {/* note svg */}
         <img
           className={`h-full mx-auto notes-enter
@@ -147,7 +170,7 @@ export default function IndividualBar({
           style={{ animationDelay: `${50 * index}ms` }}
           src={noteImages[subdivisons]}
         />
-        {/* up arrow svg */}
+        {/* tick counter arrow */}
         {tickCount === index + 1 && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -230,6 +253,14 @@ export default function IndividualBar({
               <input type="radio" checked={subdivisons === 4} readOnly />
             </span>
           </div>
+        </div>
+
+        <div
+          className="w-full flex justify-center gap-2 mt-2"
+          onClick={toggleAccented}
+        >
+          <input readOnly checked={accented} type="checkbox" />
+          <label>Accented</label>
         </div>
       </DialogBox>
     </>
