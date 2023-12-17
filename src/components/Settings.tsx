@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { settingCtx } from "../App";
 
 export type userPreference = {
-  sound: "sound1" | "sound2" | "sound3";
+  sound: "HiHat" | "kick" | "snare";
   backgroundTick: boolean;
   onlyTickOnAccents: boolean;
   regularTickBgColor: string;
@@ -12,7 +12,7 @@ export type userPreference = {
 export default function Settings() {
   const setting = useContext(settingCtx);
 
-  const [sound, setSound] = useState(setting ? setting.value?.sound : "sound1");
+  const [sound, setSound] = useState(setting ? setting.value?.sound : "HiHat");
   const [backgroundTick, setBackgroundTick] = useState(
     setting ? setting.value?.backgroundTick : false
   );
@@ -27,7 +27,7 @@ export default function Settings() {
     setting ? setting.value?.accentTickBgColor : "#fd4444"
   );
 
-  function handleSoundChange(sound: "sound1" | "sound2" | "sound3") {
+  function handleSoundChange(sound: "HiHat" | "kick" | "snare") {
     setSound(sound);
   }
 
@@ -62,42 +62,42 @@ export default function Settings() {
             <h2 className="mb-2 text-base font-semibold">Tick Sound</h2>
             <li
               className="ml-4 flex gap-1"
-              onClick={() => handleSoundChange("sound1")}
+              onClick={() => handleSoundChange("HiHat")}
             >
               <input
                 type="radio"
                 name="tickSound"
                 value="sound1"
-                checked={sound === "sound1"}
+                checked={sound === "HiHat"}
                 readOnly
               />
-              <label>Tick Sound 1</label>
+              <label>Hi Hat</label>
             </li>
             <li
               className="ml-4 flex gap-1"
-              onClick={() => handleSoundChange("sound2")}
+              onClick={() => handleSoundChange("kick")}
             >
               <input
                 type="radio"
                 name="tickSound"
                 value="sound2"
-                checked={sound === "sound2"}
+                checked={sound === "kick"}
                 readOnly
               />
-              <label>Tick Sound 2</label>
+              <label>Kick</label>
             </li>
             <li
               className="ml-4 flex gap-1"
-              onClick={() => handleSoundChange("sound3")}
+              onClick={() => handleSoundChange("snare")}
             >
               <input
                 type="radio"
                 name="tickSound"
                 value="sound3"
-                checked={sound === "sound3"}
+                checked={sound === "snare"}
                 readOnly
               />
-              <label>Tick Sound 3</label>
+              <label>Snare</label>
             </li>
           </ol>
         </div>

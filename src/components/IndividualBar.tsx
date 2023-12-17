@@ -1,6 +1,13 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 import * as Tone from "tone";
-import rideSample from "/samples/ride/new-ride.wav";
+import hh_regular from "/samples/hihat/hh_regular.mp3";
+import hh_accented from "/samples/hihat/hh_accented.mp3";
+import kick_regular from "/samples/kick/kick_regular.mp3";
+import kick_accented from "/samples/kick/kick_accented.mp3";
+import snare_regular from "/samples/snare/snare_regular.mp3";
+import snare_accented from "/samples/snare/snare_accented.mp3";
+
+import { settingCtx } from "../App";
 import DialogBox from "./DialogBox";
 
 interface IndividualBar {
@@ -15,19 +22,55 @@ export default function IndividualBar({
   tickCount,
   tempo,
 }: IndividualBar) {
-  const playRef = useRef<null | CallableFunction>(null);
+  const settings = useContext(settingCtx);
+  const [tickSound, setTickSound] = useState({
+    accent: hh_accented,
+    regular: hh_regular,
+  });
+
+  const regularTickPlayer = useRef<null | CallableFunction>(null);
+  const accentedTickPlayer = useRef<null | CallableFunction>(null);
+
   const [accented, setAccented] = useState(index == 0 ? true : false);
+
+  //change the sound
+  useEffect(() => {
+    if (settings && settings.value) {
+      switch (settings.value.sound) {
+        case "HiHat":
+          setTickSound({ accent: hh_accented, regular: hh_regular });
+          break;
+
+        case "kick":
+          setTickSound({ accent: kick_accented, regular: kick_regular });
+          break;
+
+        case "snare":
+          setTickSound({ accent: snare_accented, regular: snare_regular });
+          break;
+
+        default:
+          setTickSound({ accent: hh_accented, regular: hh_regular });
+          break;
+      }
+    }
+  }, [settings]);
 
   //set up the tick
   useEffect(() => {
-    const tick = new Tone.Player(rideSample).toDestination();
+    const regularTick = new Tone.Player(tickSound.regular).toDestination();
+    const accentedTick = new Tone.Player(tickSound.accent).toDestination();
 
     Tone.loaded().then(() => {
-      playRef.current = () => {
-        tick.start();
+      regularTickPlayer.current = () => {
+        regularTick.start();
+      };
+
+      accentedTickPlayer.current = () => {
+        accentedTick.start();
       };
     });
-  }, []);
+  }, [tickSound]);
 
   const MinInMS = 60000;
 
@@ -37,8 +80,10 @@ export default function IndividualBar({
   let subdivisonTiming = MinInMS / tempo / subdivisons;
 
   const playTick = () => {
-    if (playRef.current) {
-      playRef.current();
+    if (accented && accentedTickPlayer.current) {
+      accentedTickPlayer.current();
+    } else if (regularTickPlayer.current) {
+      regularTickPlayer.current();
     }
   };
 
@@ -150,7 +195,7 @@ export default function IndividualBar({
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            className="w-3 h-3 scale-x-[4] absolute -top-3 left-2/4 -translate-x-2/4"
+            className="w-3 h-3 scale-x-[4] absolute -top-4 left-2/4 -translate-x-2/4"
           >
             <path
               strokeLinecap="round"
@@ -165,7 +210,7 @@ export default function IndividualBar({
           className={`h-full mx-auto notes-enter
           ${
             //increase the image scale if its doted eigth image
-            subdivisons === 5 ? "scale-150" : ""
+            subdivisons === 5 ? "scale-[1.4]" : ""
           }`}
           style={{ animationDelay: `${50 * index}ms` }}
           src={noteImages[subdivisons]}
