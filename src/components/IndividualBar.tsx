@@ -79,11 +79,15 @@ export default function IndividualBar({
 
   let subdivisonTiming = MinInMS / tempo / subdivisons;
 
-  const playTick = () => {
-    if (accented && accentedTickPlayer.current) {
-      accentedTickPlayer.current();
-    } else if (regularTickPlayer.current) {
+  const playRegularTick = () => {
+    if (regularTickPlayer.current) {
       regularTickPlayer.current();
+    }
+  };
+
+  const playAccentTick = () => {
+    if (accentedTickPlayer.current) {
+      accentedTickPlayer.current();
     }
   };
 
@@ -116,59 +120,79 @@ export default function IndividualBar({
 
         //Quarter Notes
         case 1:
-          playTick();
+          if (!accented) {
+            playRegularTick();
+          } else {
+            playAccentTick();
+          }
           break;
 
         //Eight Notes
         case 2:
-          playTick();
+          if (!accented) {
+            playRegularTick();
+          } else {
+            playAccentTick();
+          }
 
           setTimeout(() => {
-            playTick();
+            playRegularTick();
           }, subdivisonTiming);
           break;
 
         //Triplet Notes
         case 3:
-          playTick();
+          if (!accented) {
+            playRegularTick();
+          } else {
+            playAccentTick();
+          }
 
           setTimeout(() => {
-            playTick();
+            playRegularTick();
           }, subdivisonTiming);
 
           setTimeout(() => {
-            playTick();
+            playRegularTick();
           }, subdivisonTiming * 2);
           break;
 
         //Sixteenth Notes
         case 4:
-          playTick();
+          if (!accented) {
+            playRegularTick();
+          } else {
+            playAccentTick();
+          }
 
           setTimeout(() => {
-            playTick();
+            playRegularTick();
           }, subdivisonTiming);
 
           setTimeout(() => {
-            playTick();
+            playRegularTick();
           }, subdivisonTiming * 2);
 
           setTimeout(() => {
-            playTick();
+            playRegularTick();
           }, subdivisonTiming * 3);
           break;
 
         //Doted Eight Notes
         case 5:
-          playTick();
+          if (!accented) {
+            playRegularTick();
+          } else {
+            playAccentTick();
+          }
 
           setTimeout(() => {
-            playTick();
+            playRegularTick();
           }, subdivisonTiming * 2);
           break;
 
         default:
-          playTick();
+          playRegularTick();
           break;
       }
     }
