@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: "Rubik", sans-serif;
+}
+
 body {
   --bg-color: #000a15;
   background: var(--bg-color);
