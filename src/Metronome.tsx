@@ -49,7 +49,6 @@ export default function Metronome() {
     if (!metronome) {
       setBars(0);
       setMetronome(setInterval(tickMetronome, tickDuration));
-
       return;
     }
 
@@ -58,6 +57,21 @@ export default function Metronome() {
     clearInterval(metronome);
     setMetronome(null);
   }
+
+  //event listener for space bar to toggle metronome
+  useEffect(() => {
+    function toggleWithSpace(event: globalThis.KeyboardEvent) {
+      if (event.code === "Space") {
+        toggleMetronome();
+      }
+    }
+
+    window.addEventListener("keydown", toggleWithSpace);
+
+    return () => {
+      window.removeEventListener("keydown", toggleWithSpace);
+    };
+  }, [metronome]);
 
   function tickMetronome() {
     setTickCount((prevCount) => {
