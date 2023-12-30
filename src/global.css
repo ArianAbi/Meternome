@@ -15,7 +15,7 @@ body {
 .notes-enter {
   outline: 1px solid white;
   outline-color: rgba(255, 255, 255, 0);
-  outline-offset: 1rem;
+  outline-offset: 0.5rem;
   border-radius: 1px;
 
   animation: notes-enter 1.5s ease-in-out forwards;
