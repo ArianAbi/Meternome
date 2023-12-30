@@ -1,14 +1,11 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import Controls from "./components/Controls";
 import { Pendulum, PendulumContainer } from "./components/Pendulum";
 import DialogBox from "./components/DialogBox";
 import BarsSection from "./components/BarsSection";
-import Settings, { type userPreference } from "./components/Settings";
-import { settingCtx } from "./App";
+import Settings from "./components/Settings";
 
 export default function Metronome() {
-  const setting = useContext(settingCtx);
-
   const minTempo = 20;
   const maxTempo = 320;
 
@@ -88,47 +85,8 @@ export default function Metronome() {
     setTimeSignuture(timeSigniture);
   }
 
-  function getTickBackground(settings: userPreference) {
-    if (tickCount === 1) {
-      return settings.accentTickBgColor;
-    } else {
-      if (!settings.onlyTickOnAccents) {
-        return settings.regularTickBgColor;
-      }
-    }
-  }
-
-  function getTheLightness(tickCount: number) {
-    let brightness = 100;
-    let decreaseAmount = 0;
-
-    const decreaseStep = 100 / (timeSigniture + 1);
-
-    if (tickCount != 1) {
-      decreaseAmount = Math.floor(decreaseStep * tickCount - decreaseStep * 2);
-    }
-
-    return `${brightness - decreaseAmount}%`;
-  }
-
   return (
     <>
-      {/* background tick */}
-      {setting &&
-        setting.value &&
-        setting.value.backgroundTick &&
-        tickCount > 0 && (
-          <div
-            className="absolute left-0 top-0 h-full w-full"
-            style={{
-              background: getTickBackground(setting.value),
-
-              // decrease the lightness of the background with every tick
-              filter: `brightness(${getTheLightness(tickCount)})`,
-            }}
-          ></div>
-        )}
-
       <div className="mx-auto flex h-[100svh] max-w-screen-md flex-col items-center">
         {/* title */}
         <header className="z-50 mb-2 flex w-full items-center justify-between px-4 py-3 text-center text-lg md:text-xl font-bold">
