@@ -131,7 +131,7 @@ export default function Metronome() {
 
       <div className="mx-auto flex h-[100svh] max-w-screen-md flex-col items-center">
         {/* title */}
-        <header className="z-50 mb-2 flex w-full items-center justify-between px-4 py-3 text-center text-xl font-bold">
+        <header className="z-50 mb-2 flex w-full items-center justify-between px-4 py-3 text-center text-lg md:text-xl font-bold">
           <a
             href="https://github.com/ArianAbi/MeternomeVite"
             title="github page"
@@ -146,7 +146,7 @@ export default function Metronome() {
             </svg>
           </a>
 
-          <h1>Metronome</h1>
+          <h1>Meternome</h1>
 
           <button onClick={() => setSettingDialogOpen(true)} title="settings">
             <svg
@@ -164,7 +164,7 @@ export default function Metronome() {
             </svg>
           </button>
         </header>
-        <hr className="w-4/6 border-[1px] border-white md:w-full z-10" />
+        <hr className="w-4/6 border-[1px] mb-1 border-white md:w-full z-10" />
 
         {/* settings dialog box */}
         <DialogBox open={settingDialogOpen} setOpen={setSettingDialogOpen}>
