@@ -1,0 +1,47 @@
+:root {
+  --slider-width: 0%;
+  --border-radius: 5px;
+  --height: 15px;
+}
+
+*:focus-visible {
+  outline: 2px #ddb917 solid;
+}
+
+.tempo-slider {
+  appearance: none;
+  height: var(--height);
+  position: relative;
+  background: #66767f;
+  border-radius: var(--border-radius);
+  transition: 0.1s ease-in-out;
+}
+
+.tempo-slider::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(0%, -50%);
+  width: var(--slider-width);
+  height: var(--height);
+  z-index: 0;
+  background: #2fa4c2;
+  border-radius: var(--border-radius);
+}
+
+.tempo-slider::-webkit-slider-thumb {
+  position: relative;
+  appearance: none;
+  height: var(--height);
+  aspect-ratio: 1/1;
+  background: #0b5264;
+  border-right: 6px solid white;
+  z-index: 99;
+  transition: all 0.1s ease-in-out;
+}
+
+.tempo-slider:active {
+  transform: scaleY(1.5);
+  border-radius: 0;
+}

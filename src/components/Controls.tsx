@@ -1,10 +1,7 @@
-import {
-  useState,
-  type ChangeEvent,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
+import { motion } from "framer-motion";
 import useClamp from "../hooks/useClamp";
+import TempoSlider from "./TempoSlider";
 
 interface Controls {
   tempo: number;
@@ -53,59 +50,64 @@ export default function Controls({
 
   return (
     <>
-      <div className="z-10 flex w-full flex-col items-center justify-center bg-[#001b2a] pb-4 pt-4 md:rounded-t-3xl">
-        <div className="flex h-full w-full items-center justify-between px-12 py-2">
-          <div className="divide-y-2">
-            <button
-              className="mb-2 h-[35px] w-[35px] text-white"
-              onClick={() => AdjustTempo(-5)}
+      <div className="z-10 flex w-full flex-col items-center justify-center bg-[#001b2a] pb-8 pt-4 md:rounded-t-3xl">
+        <div className="flex h-full w-full items-center justify-center px-12">
+          {/* minus button */}
+          <motion.button
+            whileTap={{ scale: 1.5 }}
+            className="text-white h-8 aspect-square text-3xl mr-2 origin-center flex items-center justify-start"
+            onClick={() => AdjustTempo(-1)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={4}
+              stroke="currentColor"
+              className="w-6 h-6"
             >
-              -5
-            </button>
-            <button
-              className="mb-2 h-[35px] w-[35px] text-white"
-              onClick={() => AdjustTempo(-1)}
-            >
-              -1
-            </button>
-          </div>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+            </svg>
+          </motion.button>
 
-          <div className="flex flex-col items-center justify-center gap-2">
-            <div className="mx-6 w-full text-center">
-              {/* Tempo Slider*/}
-              <input
-                className="h-12 w-full outline-2"
-                type="range"
-                min={20}
-                max={320}
-                value={tempo}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setTempo(parseInt(e.target.value))
-                }
+          <TempoSlider
+            min={minTempo}
+            max={maxTempo}
+            value={tempo}
+            onChange={(e) => setTempo(parseInt(e.target.value))}
+          />
+
+          {/* plus button */}
+          <motion.button
+            whileTap={{ scale: 1.5 }}
+            className="text-white h-8 aspect-square text-3xl ml-2 origin-center flex items-center justify-end"
+            onClick={() => AdjustTempo(1)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={4}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
               />
-              <p>tempo : {tempo}</p>
-            </div>
-
-            <button className="bg-cyan-600 px-6 py-2" onClick={HandleTapTempo}>
-              Tap Tempo
-            </button>
-          </div>
-
-          <div className="divide-y-2">
-            <button
-              className="mb-2 h-[35px] w-[35px] text-white"
-              onClick={() => AdjustTempo(5)}
-            >
-              +5
-            </button>
-            <button
-              className="mb-2 h-[35px] w-[35px] text-white"
-              onClick={() => AdjustTempo(1)}
-            >
-              +1
-            </button>
-          </div>
+            </svg>
+          </motion.button>
         </div>
+
+        <span className="text-base px-6 mb-4 text-left">Tempo : {tempo}</span>
+
+        <button
+          className=" bg-cyan-600 px-6 py-4 tracking-wider rounded-md text-sm font-semibold "
+          onClick={HandleTapTempo}
+        >
+          Tap the Tempo
+        </button>
       </div>
     </>
   );

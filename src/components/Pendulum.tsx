@@ -12,11 +12,9 @@ export function Pendulum({ tempo, playing, pendulumWeightPosition }: Pendulum) {
   return (
     <>
       <motion.div
-        key={tempo}
-        className="absolute bottom-0 left-2/4 mt-auto h-[350px] w-2 origin-bottom -translate-x-2/4 translate-y-4 bg-stone-400"
-        style={{ filter: "url(#motionBlur)" }}
-        initial={{ rotate: 0 }}
-        animate={{ rotate: playing ? [-20, 20] : 0 }}
+        className="absolute bottom-0 origin-bottom left-2/4"
+        initial={{ rotateZ: 0, translateX: "-50%", translateY: "1rem" }}
+        animate={{ rotateZ: playing ? [-20, 20] : 0 }}
         transition={{
           repeat: playing ? Infinity : 0,
           duration: 60 / tempo,
@@ -24,20 +22,25 @@ export function Pendulum({ tempo, playing, pendulumWeightPosition }: Pendulum) {
           ease: "easeIn",
         }}
       >
-        {/* pendulum weight */}
-        <img
-          className={`absolute left-2/4 top-[${pendulumWeightPosition}%] w-[100px] max-w-none -translate-x-2/4 px-6`}
-          style={{
-            top: `${pendulumWeightPosition}%`,
-          }}
-          src="/pendulum-weight.svg"
-          alt="pendulum-weight"
-        />
+        {/* pendulum */}
+        <div
+          className="w-3 h-[320px] bg-stone-500 absolute bottom-0 left-2/4 -translate-x-2/4 rounded-t-sm"
+          style={{ boxShadow: "0px 0px 20px 0px rgba(0,0,0,0.5)" }}
+        >
+          {/* weight */}
+          <img
+            className="absolute w-12 left-2/4 -translate-x-2/4 max-w-none "
+            style={{ top: `${pendulumWeightPosition}%` }}
+            src="/Metronome/Weight.svg"
+            alt="pendulum-weight"
+          />
+        </div>
       </motion.div>
+
       {/* metronome background */}
       <img
         className="absolute bottom-0 left-2/4 -z-10 max-w-none -translate-x-2/4"
-        src="metronome-background.svg"
+        src="Metronome/Body.svg"
         alt="metronome background"
       />
     </>
