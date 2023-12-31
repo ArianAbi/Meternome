@@ -8,6 +8,14 @@ export type userPreference = {
 export default function Settings() {
   const setting = useContext(settingCtx);
 
+  type soundsType = { sound: "HiHat" | "kick" | "snare"; img: string }[];
+
+  const sounds: soundsType = [
+    { sound: "HiHat", img: "/Sound-Icons/hihat.png" },
+    { sound: "kick", img: "/Sound-Icons/kick.png" },
+    { sound: "snare", img: "/Sound-Icons/snare.png" },
+  ];
+
   const [sound, setSound] = useState(setting ? setting.value?.sound : "HiHat");
 
   function handleSoundChange(sound: "HiHat" | "kick" | "snare") {
@@ -30,49 +38,27 @@ export default function Settings() {
   return (
     <>
       <div className="flex w-full flex-col gap-4 px-2">
-        <div className="w-full">
-          <ol>
-            <h2 className="mb-2 text-base font-semibold">Tick Sound</h2>
-            <li
-              className="ml-4 flex gap-1"
-              onClick={() => handleSoundChange("HiHat")}
-            >
-              <input
-                type="radio"
-                name="tickSound"
-                value="sound1"
-                checked={sound === "HiHat"}
-                readOnly
-              />
-              <label>Hi Hat</label>
-            </li>
-            <li
-              className="ml-4 flex gap-1"
-              onClick={() => handleSoundChange("kick")}
-            >
-              <input
-                type="radio"
-                name="tickSound"
-                value="sound2"
-                checked={sound === "kick"}
-                readOnly
-              />
-              <label>Kick</label>
-            </li>
-            <li
-              className="ml-4 flex gap-1"
-              onClick={() => handleSoundChange("snare")}
-            >
-              <input
-                type="radio"
-                name="tickSound"
-                value="sound3"
-                checked={sound === "snare"}
-                readOnly
-              />
-              <label>Snare</label>
-            </li>
-          </ol>
+        <div className="w-full grid grid-cols-2 gap-4">
+          {sounds.map((_el, i) => {
+            return (
+              <div
+                className={`w-auto text-lg text-center aspect-square px-6 py-2 rounded-md bg-opacity-5 transition-all duration-150
+                ${
+                  sound === _el.sound
+                    ? "bg-white outline outline-2 outline-white"
+                    : "opacity-60"
+                }`}
+                onClick={() => handleSoundChange(_el.sound)}
+              >
+                <img
+                  className="w-10 sm:w-14 md:w-16 transition-opacity "
+                  src={_el.img}
+                />
+
+                <h3 className="mt-2">{_el.sound}</h3>
+              </div>
+            );
+          })}
         </div>
       </div>
     </>
