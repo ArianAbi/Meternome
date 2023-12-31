@@ -109,8 +109,8 @@ export default function IndividualBar({
       { value: "quarter", img: "quarter-notes.png" },
       { value: "eighth", img: "eighth-notes.png" },
       { value: "triplet", img: "triplet-notes.png" },
-      { value: "sixteenth", img: "sixteenth-notes.png" },
       { value: "doted-triplet", img: "doted-triplet-notes.png" },
+      { value: "sixteenth", img: "sixteenth-notes.png" },
     ];
 
   const specials = [
@@ -252,8 +252,12 @@ export default function IndividualBar({
 
         {/* note svg */}
         <img
-          className="h-full mx-auto notes-enter"
-          style={{ animationDelay: `${50 * index}ms` }}
+          className={`h-full mx-auto notes-enter ${
+            selectedSubdivision === "triplet" ? "scale-125" : "scale-100"
+          }`}
+          style={{
+            animationDelay: `${50 * index}ms`,
+          }}
           src={getSelectedSubdivisionImage()}
         />
         {/* tick counter arrow */}
