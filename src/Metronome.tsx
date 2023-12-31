@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Controls from "./components/Controls";
 import { Pendulum, PendulumContainer } from "./components/Pendulum";
 import DialogBox from "./components/DialogBox";
@@ -9,7 +9,8 @@ export default function Metronome() {
   const minTempo = 20;
   const maxTempo = 320;
 
-  const [metronome, setMetronome] = useState<null | number>(null);
+  const metronome = useRef<number | null>(null);
+  const [playing, setPlaying] = useState(false);
   const [pendulumWeightPosition, setPendulumWeightPosition] = useState(0);
 
   const [tickCount, setTickCount] = useState(0);
@@ -31,28 +32,30 @@ export default function Metronome() {
     setPendulumWeightPosition(((tempo * 100) / maxTempo) * ratio);
 
     // reset the metronome
-    if (metronome) {
-      clearInterval(metronome);
-      setMetronome(null);
+    if (metronome.current) {
+      clearInterval(metronome.current);
+      metronome.current = null;
 
       setTimeout(() => {
-        setMetronome(setInterval(tickMetronome, tickDuration));
+        metronome.current = setInterval(tickMetronome, tickDuration);
       }, 10);
     }
   }, [tempo, timeSigniture]);
 
   function toggleMetronome() {
     //start if we dont have a metronome
-    if (!metronome) {
+    if (!metronome.current) {
+      setPlaying(true);
       setBars(0);
-      setMetronome(setInterval(tickMetronome, tickDuration));
+      metronome.current = setInterval(tickMetronome, tickDuration);
       return;
     }
 
     //else stop the metronome
+    setPlaying(false);
     setTickCount(0);
-    clearInterval(metronome);
-    setMetronome(null);
+    clearInterval(metronome.current);
+    metronome.current = null;
   }
 
   //event listener for space bar to toggle metronome
@@ -68,7 +71,7 @@ export default function Metronome() {
     return () => {
       window.removeEventListener("keydown", toggleWithSpace);
     };
-  }, [metronome]);
+  }, [metronome.current]);
 
   function tickMetronome() {
     setTickCount((prevCount) => {
@@ -180,7 +183,7 @@ export default function Metronome() {
           <button
             className={`absolute left-2/4 top-2/4 z-50 flex h-full w-full -translate-x-2/4 -translate-y-2/4 items-center justify-center
             text-2xl font-bold text-white backdrop-blur-sm transition-opacity duration-300
-            ${metronome ? "opacity-0" : "opacity-100"}`}
+            ${playing ? "opacity-0" : "opacity-100"}`}
             onClick={() => toggleMetronome()}
           >
             {/* round */}
@@ -202,7 +205,7 @@ export default function Metronome() {
 
           <Pendulum
             tempo={tempo}
-            playing={metronome ? true : false}
+            playing={playing ? true : false}
             pendulumWeightPosition={pendulumWeightPosition}
             tickCount={tickCount}
           />

@@ -21,6 +21,7 @@ export function Pendulum({ tempo, playing, pendulumWeightPosition }: Pendulum) {
           repeatType: "mirror",
           ease: "easeIn",
         }}
+        key={tempo}
       >
         {/* pendulum */}
         <div
