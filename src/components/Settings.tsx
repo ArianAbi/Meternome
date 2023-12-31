@@ -49,6 +49,7 @@ export default function Settings() {
                     : "opacity-60"
                 }`}
                 onClick={() => handleSoundChange(_el.sound)}
+                key={i}
               >
                 <img
                   className="w-10 sm:w-14 md:w-16 transition-opacity "
