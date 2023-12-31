@@ -49,7 +49,7 @@ export function Pendulum({ tempo, playing, pendulumWeightPosition }: Pendulum) {
 
 export function PendulumContainer({ children }: { children: ReactNode }) {
   return (
-    <div className="relative h-full w-full origin-bottom scale-95 sm:scale-100 lg:scale-125">
+    <div className="relative h-full w-full origin-bottom scale-[0.8] sm:scale-100 lg:scale-125">
       {children}
     </div>
   );

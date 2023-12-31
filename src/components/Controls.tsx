@@ -50,7 +50,7 @@ export default function Controls({
 
   return (
     <>
-      <div className="z-10 flex w-full flex-col items-center justify-center bg-[#001b2a] pb-8 pt-4 md:rounded-t-3xl">
+      <div className="z-10 flex w-full flex-col items-center justify-center bg-[#001b2a] pb-4 pt-2 sm:pb-8 sm:pt-4 md:rounded-t-3xl">
         <div className="flex h-full w-full items-center justify-center px-12">
           {/* minus button */}
           <motion.button
