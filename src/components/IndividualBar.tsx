@@ -23,6 +23,7 @@ export default function IndividualBar({
   tempo,
 }: IndividualBar) {
   const settings = useContext(settingCtx);
+
   const [tickSound, setTickSound] = useState({
     accent: hh_accented,
     regular: hh_regular,
@@ -73,11 +74,22 @@ export default function IndividualBar({
   }, [tickSound]);
 
   const MinInMS = 60000;
+  const oneEighth = MinInMS / tempo / 2;
+  const oneTriplet = MinInMS / tempo / 3;
+  const oneSixteenth = MinInMS / tempo / 4;
 
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [subdivisons, setSubdivisons] = useState(1);
 
-  let subdivisonTiming = MinInMS / tempo / subdivisons;
+  type selectedSubdivisionType =
+    | "mute"
+    | "quarter"
+    | "eighth"
+    | "triplet"
+    | "sixteenth"
+    | "doted-triplet";
+
+  const [selectedSubdivision, setSelectedSubdivisons] =
+    useState<selectedSubdivisionType>("quarter");
 
   const playRegularTick = () => {
     if (regularTickPlayer.current) {
@@ -91,14 +103,15 @@ export default function IndividualBar({
     }
   };
 
-  const noteImages = [
-    "mute.png",
-    "quarter-notes.png",
-    "eighth-notes.png",
-    "triplet-notes.png",
-    "sixteenth-notes.png",
-    "doted-triplet-notes.png",
-  ];
+  const possibleSubdivisons: { value: selectedSubdivisionType; img: string }[] =
+    [
+      { value: "mute", img: "mute.png" },
+      { value: "quarter", img: "quarter-notes.png" },
+      { value: "eighth", img: "eighth-notes.png" },
+      { value: "triplet", img: "triplet-notes.png" },
+      { value: "sixteenth", img: "sixteenth-notes.png" },
+      { value: "doted-triplet", img: "doted-triplet-notes.png" },
+    ];
 
   const specials = [
     "First",
@@ -113,13 +126,13 @@ export default function IndividualBar({
 
   useEffect(() => {
     if (tickCount === index + 1) {
-      switch (subdivisons) {
+      switch (selectedSubdivision) {
         //Mute
-        case 0:
+        case "mute":
           break;
 
         //Quarter Notes
-        case 1:
+        case "quarter":
           if (!accented) {
             playRegularTick();
           } else {
@@ -128,7 +141,7 @@ export default function IndividualBar({
           break;
 
         //Eight Notes
-        case 2:
+        case "eighth":
           if (!accented) {
             playRegularTick();
           } else {
@@ -137,11 +150,11 @@ export default function IndividualBar({
 
           setTimeout(() => {
             playRegularTick();
-          }, subdivisonTiming);
+          }, oneEighth);
           break;
 
         //Triplet Notes
-        case 3:
+        case "triplet":
           if (!accented) {
             playRegularTick();
           } else {
@@ -150,15 +163,15 @@ export default function IndividualBar({
 
           setTimeout(() => {
             playRegularTick();
-          }, subdivisonTiming);
+          }, oneTriplet);
 
           setTimeout(() => {
             playRegularTick();
-          }, subdivisonTiming * 2);
+          }, oneTriplet * 2);
           break;
 
         //Sixteenth Notes
-        case 4:
+        case "sixteenth":
           if (!accented) {
             playRegularTick();
           } else {
@@ -167,19 +180,19 @@ export default function IndividualBar({
 
           setTimeout(() => {
             playRegularTick();
-          }, subdivisonTiming);
+          }, oneSixteenth);
 
           setTimeout(() => {
             playRegularTick();
-          }, subdivisonTiming * 2);
+          }, oneSixteenth * 2);
 
           setTimeout(() => {
             playRegularTick();
-          }, subdivisonTiming * 3);
+          }, oneSixteenth * 3);
           break;
 
-        //Doted Eight Notes
-        case 5:
+        //Doted Triplet Notes
+        case "doted-triplet":
           if (!accented) {
             playRegularTick();
           } else {
@@ -188,7 +201,7 @@ export default function IndividualBar({
 
           setTimeout(() => {
             playRegularTick();
-          }, subdivisonTiming * 2);
+          }, oneTriplet * 2);
           break;
 
         default:
@@ -200,6 +213,14 @@ export default function IndividualBar({
 
   function toggleAccented() {
     setAccented((prev) => !prev);
+  }
+
+  function getSelectedSubdivisionImage() {
+    const img = possibleSubdivisons.find(
+      ({ value }) => value === selectedSubdivision
+    )?.img;
+
+    return img ? img : "quarter-notes.png";
   }
 
   return (
@@ -231,13 +252,9 @@ export default function IndividualBar({
 
         {/* note svg */}
         <img
-          className={`h-full mx-auto notes-enter
-          ${
-            //increase the image scale if its doted eigth image
-            subdivisons === 5 ? "scale-[1.4]" : ""
-          }`}
+          className="h-full mx-auto notes-enter"
           style={{ animationDelay: `${50 * index}ms` }}
-          src={noteImages[subdivisons]}
+          src={getSelectedSubdivisionImage()}
         />
         {/* tick counter arrow */}
         {tickCount === index + 1 && (
@@ -262,65 +279,26 @@ export default function IndividualBar({
             {specials[index]} bar Subdivisons
           </span>
 
-          {/* mute subdivison */}
           <div className="grid grid-cols-2 gap-8 mx-4">
-            <span
-              className="flex flex-col justify-between items-center gap-4 text-center"
-              onClick={() => setSubdivisons(0)}
-            >
-              <img src="mute.png" className="w-9 h-12 col-span-full" />
+            {/* mute subdivison */}
 
-              <input type="radio" checked={subdivisons === 0} readOnly />
-            </span>
+            {possibleSubdivisons.map(({ value, img }, i) => {
+              return (
+                <span
+                  className="flex flex-col justify-between items-center gap-4 text-center"
+                  onClick={() => setSelectedSubdivisons(value)}
+                  key={i}
+                >
+                  <img src={img} className="h-12 max-w-xs col-span-full" />
 
-            {/* Quarter subdivison */}
-            <span
-              className="flex flex-col justify-between items-center gap-4 text-center"
-              onClick={() => setSubdivisons(1)}
-            >
-              <img src="quarter-notes.png" className="w-10 h-12" />
-
-              <input type="radio" checked={subdivisons === 1} readOnly />
-            </span>
-
-            {/* Eighth subdivison */}
-            <span
-              className="flex flex-col justify-between items-center gap-4 text-center"
-              onClick={() => setSubdivisons(2)}
-            >
-              <img src="eighth-notes.png" className="w-10 h-12" />
-              <input type="radio" checked={subdivisons === 2} readOnly />
-            </span>
-
-            {/* Triplet subdivison */}
-            <span
-              className="flex flex-col justify-between items-center gap-4 text-center"
-              onClick={() => setSubdivisons(3)}
-            >
-              <img src="triplet-notes.png" className="w-14 h-12" />
-
-              <input type="radio" checked={subdivisons === 3} readOnly />
-            </span>
-
-            {/* Doted Triplet subdivison */}
-            <span
-              className="flex flex-col justify-between items-center gap-4 text-center"
-              onClick={() => setSubdivisons(5)}
-            >
-              <img src="doted-triplet-notes.png" className="w-14 h-14" />
-
-              <input type="radio" checked={subdivisons === 5} readOnly />
-            </span>
-
-            {/* Sixteenth subdivison */}
-            <span
-              className="flex flex-col justify-between items-center gap-4 text-center"
-              onClick={() => setSubdivisons(4)}
-            >
-              <img src="sixteenth-notes.png" className="w-16 h-12 " />
-
-              <input type="radio" checked={subdivisons === 4} readOnly />
-            </span>
+                  <input
+                    type="radio"
+                    checked={selectedSubdivision === value}
+                    readOnly
+                  />
+                </span>
+              );
+            })}
           </div>
         </div>
 
