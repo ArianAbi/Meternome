@@ -9,7 +9,7 @@ export default function Metronome() {
   const minTempo = 20;
   const maxTempo = 320;
 
-  const metronome = useRef<number | null>(null);
+  const metronome = useRef<NodeJS.Timeout | null>(null);
   const [playing, setPlaying] = useState(false);
   const [pendulumWeightPosition, setPendulumWeightPosition] = useState(0);
 
