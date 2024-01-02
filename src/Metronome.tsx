@@ -18,15 +18,43 @@ export default function Metronome() {
 
   const [tickCount, setTickCount] = useState(0);
 
-  const [tempo, setTempo] = useState(120);
+  const [tempo, setTempo] = useState(getTempo());
   const [bars, setBars] = useState(0);
 
-  const [timeSigniture, setTimeSignuture] = useState(4);
+  const [timeSigniture, setTimeSignuture] = useState(getTimeSignuture());
   const [timeSigDialogOpen, setTimeSigDialogOpen] = useState(false);
   const [settingDialogOpen, setSettingDialogOpen] = useState(false);
 
   const msInMinute = 60000;
   const tickDuration = msInMinute / tempo;
+
+  //get the tempo from the user preference storage
+  function getTempo() {
+    if (userPreference && userPreference.value) {
+      const tempo = userPreference.value.tempo;
+      if (tempo) {
+        return tempo;
+      } else {
+        return 120;
+      }
+    } else {
+      return 120;
+    }
+  }
+
+  //get the time signuture from the user preference storage
+  function getTimeSignuture() {
+    if (userPreference && userPreference.value) {
+      const timeSigniture = userPreference.value.timeSigniture;
+      if (timeSigniture) {
+        return timeSigniture;
+      } else {
+        return 4;
+      }
+    } else {
+      return 4;
+    }
+  }
 
   //on tempo or time signuture change update the interval and update the prefrence
   useEffect(() => {
@@ -48,6 +76,7 @@ export default function Metronome() {
     }
   }, [tempo, timeSigniture]);
 
+  //start or stop the metronome
   function toggleMetronome() {
     //start if we dont have a metronome
     if (!metronome.current) {
@@ -79,11 +108,6 @@ export default function Metronome() {
     };
   }, [metronome.current]);
 
-  //set the tempo and time sign pref
-  useEffect(() => {
-    let newPref = { ...userPreference, tempo, timeSigniture };
-    console.log(newPref);
-  }, []);
   function tickMetronome() {
     setTickCount((prevCount) => {
       if (prevCount >= timeSigniture) {
