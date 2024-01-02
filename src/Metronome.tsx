@@ -1,11 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import Controls from "./components/Controls";
 import { Pendulum, PendulumContainer } from "./components/Pendulum";
 import DialogBox from "./components/DialogBox";
 import BarsSection from "./components/BarsSection";
-import Settings from "./components/Settings";
+import Settings, { useUpdatePrefrence } from "./components/Settings";
+import { settingCtx } from "./App";
 
 export default function Metronome() {
+  const userPreference = useContext(settingCtx);
+
   const minTempo = 20;
   const maxTempo = 320;
 
@@ -25,8 +28,11 @@ export default function Metronome() {
   const msInMinute = 60000;
   const tickDuration = msInMinute / tempo;
 
-  //on tempo or time signuture change update the interval
+  //on tempo or time signuture change update the interval and update the prefrence
   useEffect(() => {
+    //update preference
+    useUpdatePrefrence({ ...userPreference?.value, tempo, timeSigniture });
+
     // calculate pendulum position
     const ratio = 0.7;
     setPendulumWeightPosition(((tempo * 100) / maxTempo) * ratio);
@@ -73,6 +79,11 @@ export default function Metronome() {
     };
   }, [metronome.current]);
 
+  //set the tempo and time sign pref
+  useEffect(() => {
+    let newPref = { ...userPreference, tempo, timeSigniture };
+    console.log(newPref);
+  }, []);
   function tickMetronome() {
     setTickCount((prevCount) => {
       if (prevCount >= timeSigniture) {

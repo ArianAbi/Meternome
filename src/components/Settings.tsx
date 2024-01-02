@@ -5,6 +5,13 @@ export type userPreference = {
   sound: "HiHat" | "kick" | "snare";
 };
 
+export function useUpdatePrefrence(prefrence: object) {
+  console.log({ ...prefrence });
+
+  const stringifyPreference = JSON.stringify(prefrence);
+  localStorage.setItem("userPreference", stringifyPreference);
+}
+
 export default function Settings() {
   const setting = useContext(settingCtx);
 
@@ -22,17 +29,8 @@ export default function Settings() {
     setSound(sound);
   }
 
-  const userPreference = {
-    sound,
-  };
-
   useEffect(() => {
-    if (setting) {
-      setting.updateValue(userPreference as userPreference);
-    }
-
-    const stringifyPreference = JSON.stringify(userPreference);
-    localStorage.setItem("userPreference", stringifyPreference);
+    useUpdatePrefrence({ ...setting?.value, sound });
   }, [sound]);
 
   return (
