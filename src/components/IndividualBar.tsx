@@ -6,6 +6,7 @@ import kick_regular from "/samples/kick/kick_regular.mp3";
 import kick_accented from "/samples/kick/kick_accented.mp3";
 import snare_regular from "/samples/snare/snare_regular.mp3";
 import snare_accented from "/samples/snare/snare_accented.mp3";
+import { useUpdatePrefrence } from "./Settings";
 
 import { settingCtx } from "../App";
 import DialogBox from "./DialogBox";
@@ -22,7 +23,7 @@ export default function IndividualBar({
   tickCount,
   tempo,
 }: IndividualBar) {
-  const settings = useContext(settingCtx);
+  const userPreference = useContext(settingCtx);
 
   const [tickSound, setTickSound] = useState({
     accent: hh_accented,
@@ -36,8 +37,8 @@ export default function IndividualBar({
 
   //change the sound
   useEffect(() => {
-    if (settings && settings.value) {
-      switch (settings.value.sound) {
+    if (userPreference && userPreference.value) {
+      switch (userPreference.value.sound) {
         case "HiHat":
           setTickSound({ accent: hh_accented, regular: hh_regular });
           break;
@@ -55,7 +56,7 @@ export default function IndividualBar({
           break;
       }
     }
-  }, [settings]);
+  }, [userPreference]);
 
   //set up the tick
   useEffect(() => {
@@ -80,29 +81,6 @@ export default function IndividualBar({
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  type selectedSubdivisionType =
-    | "mute"
-    | "quarter"
-    | "eighth"
-    | "triplet"
-    | "sixteenth"
-    | "doted-triplet";
-
-  const [selectedSubdivision, setSelectedSubdivisons] =
-    useState<selectedSubdivisionType>("quarter");
-
-  const playRegularTick = () => {
-    if (regularTickPlayer.current) {
-      regularTickPlayer.current();
-    }
-  };
-
-  const playAccentTick = () => {
-    if (accentedTickPlayer.current) {
-      accentedTickPlayer.current();
-    }
-  };
-
   const possibleSubdivisons: { value: selectedSubdivisionType; img: string }[] =
     [
       { value: "mute", img: "mute.png" },
@@ -124,6 +102,30 @@ export default function IndividualBar({
     "Eighth",
   ];
 
+  type selectedSubdivisionType =
+    | "mute"
+    | "quarter"
+    | "eighth"
+    | "triplet"
+    | "sixteenth"
+    | "doted-triplet";
+
+  const [selectedSubdivision, setSelectedSubdivisons] =
+    useState<selectedSubdivisionType>(getSubdivisionFromPrefrence());
+
+  const playRegularTick = () => {
+    if (regularTickPlayer.current) {
+      regularTickPlayer.current();
+    }
+  };
+
+  const playAccentTick = () => {
+    if (accentedTickPlayer.current) {
+      accentedTickPlayer.current();
+    }
+  };
+
+  //on tick count , play the corresponding sound if the index of this instence is equal to the tick count
   useEffect(() => {
     if (tickCount === index + 1) {
       switch (selectedSubdivision) {
@@ -222,6 +224,33 @@ export default function IndividualBar({
 
     return img ? img : "quarter-notes.png";
   }
+
+  function getSubdivisionFromPrefrence() {
+    if (userPreference && userPreference.value) {
+      const thisInstanceName = specials[index];
+      const correspondingPreference = userPreference.value[thisInstanceName];
+
+      if (correspondingPreference) {
+        return correspondingPreference;
+      } else {
+        //default to quarter note
+        return possibleSubdivisons[1].value;
+      }
+    } else {
+      //default to quarter note
+      return possibleSubdivisons[1].value;
+    }
+  }
+
+  getSubdivisionFromPrefrence();
+
+  //set the selected subdiv to the preference
+  useEffect(() => {
+    useUpdatePrefrence({
+      ...userPreference?.value,
+      [specials[index]]: selectedSubdivision,
+    });
+  }, [selectedSubdivision]);
 
   return (
     <>

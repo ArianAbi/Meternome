@@ -6,8 +6,6 @@ export type userPreference = {
 };
 
 export function useUpdatePrefrence(prefrence: object) {
-  console.log({ ...prefrence });
-
   const stringifyPreference = JSON.stringify(prefrence);
   localStorage.setItem("userPreference", stringifyPreference);
 }
