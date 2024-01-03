@@ -34,10 +34,15 @@ export default defineConfig({
             purpose: "maskable",
           },
           {
+            src: "/manifast/new-icon-maskable-512x.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any",
+          },
+          {
             src: "/manifast/new-icon-256x.png",
             sizes: "256x256",
             type: "image/png",
-            purpose: "any",
           },
         ],
         screenshots: [
