@@ -23,26 +23,21 @@ export default defineConfig({
         description: "online metronome app with advanced features",
         icons: [
           {
-            src: "/manifast/icon-192x192.png",
-            sizes: "192x192",
+            src: "/manifast/new-icon-512x.png",
+            sizes: "512x512",
             type: "image/png",
           },
           {
-            src: "/manifast/icon-256x256.png",
-            sizes: "256x256",
-            type: "image/png",
-          },
-          {
-            src: "/manifast/icon-384x384.png",
-            sizes: "384x384",
-            type: "image/png",
-            purpose: "any",
-          },
-          {
-            src: "/manifast/icon-512x512.png",
+            src: "/manifast/new-icon-maskable-512x.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "maskable",
+          },
+          {
+            src: "/manifast/new-icon-256x.png",
+            sizes: "256x256",
+            type: "image/png",
+            purpose: "any",
           },
         ],
         screenshots: [
