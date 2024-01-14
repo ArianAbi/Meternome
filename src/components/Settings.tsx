@@ -5,13 +5,13 @@ export type userPreference = {
   sound: "HiHat" | "kick" | "snare";
 };
 
-export function useUpdatePrefrence(prefrence: object) {
-  const stringifyPreference = JSON.stringify(prefrence);
+export function useUpdatePrefrence(newPrefrence: object) {
+  const stringifyPreference = JSON.stringify(newPrefrence);
   localStorage.setItem("userPreference", stringifyPreference);
 }
 
 export default function Settings() {
-  const setting = useContext(settingCtx);
+  const settingsCTX = useContext(settingCtx);
 
   type soundsType = { sound: "HiHat" | "kick" | "snare"; img: string }[];
 
@@ -21,15 +21,19 @@ export default function Settings() {
     { sound: "snare", img: "/Sound-Icons/snare.png" },
   ];
 
-  const [sound, setSound] = useState(setting ? setting.value?.sound : "HiHat");
+  const [sound, setSound] = useState(
+    settingsCTX ? settingsCTX.value?.sound : "HiHat"
+  );
 
   function handleSoundChange(sound: "HiHat" | "kick" | "snare") {
     setSound(sound);
+    useUpdatePrefrence({ ...settingsCTX?.value, sound });
+    settingsCTX?.updateValue({ ...settingsCTX?.value, sound });
   }
 
-  useEffect(() => {
-    useUpdatePrefrence({ ...setting?.value, sound });
-  }, [sound]);
+  // useEffect(() => {
+  //   useUpdatePrefrence({ ...setting?.value, sound });
+  // }, [sound]);
 
   return (
     <>
