@@ -206,7 +206,7 @@ export default function Metronome() {
         />
 
         {/* bar counter */}
-        <div className="z-50 mt-6">
+        <div className="z-40 mt-6">
           <p
             className={`text-center text-4xl ${
               tickCount === 1 ? "text-cyan-400" : ""
