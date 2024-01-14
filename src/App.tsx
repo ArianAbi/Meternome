@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { LazyMotion, domAnimation } from "framer-motion";
 import Metronome from "./Metronome";
 
 interface ctx {
@@ -21,8 +22,9 @@ export default function App() {
 
   return (
     <settingCtx.Provider value={{ value, updateValue }}>
-      {/* <Provide /> */}
-      <Metronome />
+      <LazyMotion features={domAnimation}>
+        <Metronome />
+      </LazyMotion>
     </settingCtx.Provider>
   );
 }
