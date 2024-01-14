@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { settingCtx } from "../App";
 
 export type userPreference = {
