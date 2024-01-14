@@ -6,6 +6,8 @@ import kick_regular from "/samples/kick/kick_regular.mp3";
 import kick_accented from "/samples/kick/kick_accented.mp3";
 import snare_regular from "/samples/snare/snare_regular.mp3";
 import snare_accented from "/samples/snare/snare_accented.mp3";
+import cowbell_accented from "/samples/cowbell/cowbell_accented.mp3";
+import cowbell_regular from "/samples/cowbell/cowbell_regular.mp3";
 import { useUpdatePrefrence } from "./Settings";
 
 import { settingCtx } from "../App";
@@ -49,6 +51,10 @@ export default function IndividualBar({
 
         case "snare":
           setTickSound({ accent: snare_accented, regular: snare_regular });
+          break;
+
+        case "cowbell":
+          setTickSound({ accent: cowbell_accented, regular: cowbell_regular });
           break;
 
         default:

@@ -13,27 +13,27 @@ export function useUpdatePrefrence(newPrefrence: object) {
 export default function Settings() {
   const settingsCTX = useContext(settingCtx);
 
-  type soundsType = { sound: "HiHat" | "kick" | "snare"; img: string }[];
+  type soundsType = {
+    sound: "HiHat" | "kick" | "snare" | "cowbell";
+    img: string;
+  }[];
 
   const sounds: soundsType = [
     { sound: "HiHat", img: "/Sound-Icons/hihat.png" },
     { sound: "kick", img: "/Sound-Icons/kick.png" },
     { sound: "snare", img: "/Sound-Icons/snare.png" },
+    { sound: "cowbell", img: "/Sound-Icons/cowbell.png" },
   ];
 
   const [sound, setSound] = useState(
     settingsCTX ? settingsCTX.value?.sound : "HiHat"
   );
 
-  function handleSoundChange(sound: "HiHat" | "kick" | "snare") {
+  function handleSoundChange(sound: "HiHat" | "kick" | "snare" | "cowbell") {
     setSound(sound);
     useUpdatePrefrence({ ...settingsCTX?.value, sound });
     settingsCTX?.updateValue({ ...settingsCTX?.value, sound });
   }
-
-  // useEffect(() => {
-  //   useUpdatePrefrence({ ...setting?.value, sound });
-  // }, [sound]);
 
   return (
     <>
@@ -42,7 +42,7 @@ export default function Settings() {
           {sounds.map((_el, i) => {
             return (
               <div
-                className={`w-auto text-lg text-center aspect-square px-6 py-2 rounded-md bg-opacity-5 transition-all duration-150
+                className={`w-auto text-lg text-center aspect-square px-6 py-2 rounded-md bg-opacity-5 transition-all duration-150 flex flex-col items-center justify-start
                 ${
                   sound === _el.sound
                     ? "bg-white outline outline-2 outline-white"
@@ -56,7 +56,7 @@ export default function Settings() {
                   src={_el.img}
                 />
 
-                <h3 className="mt-2">{_el.sound}</h3>
+                <h3 className="mt-auto">{_el.sound}</h3>
               </div>
             );
           })}
