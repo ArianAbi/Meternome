@@ -21,7 +21,7 @@ export default function Metronome() {
   const [tempo, setTempo] = useState(getTempo());
   const [bars, setBars] = useState(0);
 
-  const [timeSigniture, setTimeSignuture] = useState(getTimeSignuture());
+  const [timeSignature, setTimeSignature] = useState(getTimeSignature());
   const [timeSigDialogOpen, setTimeSigDialogOpen] = useState(false);
   const [settingDialogOpen, setSettingDialogOpen] = useState(false);
 
@@ -30,36 +30,44 @@ export default function Metronome() {
 
   //get the tempo from the user preference storage
   function getTempo() {
+    const defaultTempo = 120;
+
     if (userPreference && userPreference.value) {
       const tempo = userPreference.value.tempo;
       if (tempo) {
         return tempo;
       } else {
-        return 120;
+        return defaultTempo;
       }
     } else {
-      return 120;
+      return defaultTempo;
     }
   }
 
   //get the time signuture from the user preference storage
-  function getTimeSignuture() {
+  function getTimeSignature() {
+    const defaultTimeSignature = 4;
+
     if (userPreference && userPreference.value) {
-      const timeSigniture = userPreference.value.timeSigniture;
-      if (timeSigniture) {
-        return timeSigniture;
+      const timeSignature = userPreference.value.timeSignature;
+      if (timeSignature) {
+        return timeSignature;
       } else {
-        return 4;
+        return defaultTimeSignature;
       }
     } else {
-      return 4;
+      return defaultTimeSignature;
     }
   }
 
   //on tempo or time signuture change update the interval and update the prefrence
   useEffect(() => {
     //update preference
-    useUpdatePrefrence({ ...userPreference?.value, tempo, timeSigniture });
+    useUpdatePrefrence({
+      ...userPreference?.value,
+      tempo,
+      timeSignature,
+    });
 
     // calculate pendulum position
     const ratio = 0.7;
@@ -74,7 +82,7 @@ export default function Metronome() {
         metronome.current = setInterval(tickMetronome, tickDuration);
       }, 10);
     }
-  }, [tempo, timeSigniture]);
+  }, [tempo, timeSignature]);
 
   //start or stop the metronome
   function toggleMetronome() {
@@ -110,17 +118,13 @@ export default function Metronome() {
 
   function tickMetronome() {
     setTickCount((prevCount) => {
-      if (prevCount >= timeSigniture) {
+      if (prevCount >= timeSignature) {
         setBars((prevBar) => prevBar + 1);
         return 1;
       } else {
         return prevCount + 1;
       }
     });
-  }
-
-  function handleTimeSignutureChange(timeSigniture: number) {
-    setTimeSignuture(timeSigniture);
   }
 
   return (
@@ -179,12 +183,12 @@ export default function Metronome() {
             <div
               className="flex w-full gap-2 text-lg font-bold"
               key={index}
-              onClick={() => handleTimeSignutureChange(index + 2)}
+              onClick={() => setTimeSignature(index + 2)}
             >
               <input
                 type="radio"
                 name="timeSig"
-                checked={index + 2 === timeSigniture}
+                checked={index + 2 === timeSignature}
                 value={index + 2}
                 readOnly
               />
@@ -195,7 +199,7 @@ export default function Metronome() {
         </DialogBox>
 
         <BarsSection
-          timeSignuture={timeSigniture}
+          timeSignuture={timeSignature}
           setTimeSignuture={setTimeSigDialogOpen}
           tickCount={tickCount}
           tempo={tempo}
