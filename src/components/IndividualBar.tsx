@@ -292,6 +292,12 @@ export default function IndividualBar({
           }`}
           style={{
             animationDelay: `${50 * index}ms`,
+
+            //increace the size of the image if its the dotted triplet image
+            scale:
+              getSelectedSubdivisionImage() === possibleSubdivisons[4].img
+                ? "1.2"
+                : "1",
           }}
           src={getSelectedSubdivisionImage()}
         />
@@ -328,12 +334,13 @@ export default function IndividualBar({
                   onClick={() => setSelectedSubdivisons(value)}
                   key={i}
                 >
-                  <img src={img} className="h-12 max-w-xs col-span-full" />
-
-                  <input
-                    type="radio"
-                    checked={selectedSubdivision === value}
-                    readOnly
+                  <img
+                    src={img}
+                    className="h-12 max-w-xs col-span-full"
+                    style={{
+                      //increace the size of the image if its the dotted triplet image
+                      scale: img === possibleSubdivisons[4].img ? "1.4" : "1",
+                    }}
                   />
                 </span>
               );
