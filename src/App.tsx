@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import { LazyMotion, domAnimation } from "framer-motion";
 import Metronome from "./Metronome";
+import Header from "./components/Header";
 
 interface ctx {
   value: any;
@@ -21,10 +22,13 @@ export default function App() {
   }
 
   return (
-    <settingCtx.Provider value={{ value, updateValue }}>
-      <LazyMotion features={domAnimation}>
-        <Metronome />
-      </LazyMotion>
-    </settingCtx.Provider>
+    <div className="mx-auto flex h-[100svh] max-w-screen-md flex-col items-center">
+      <settingCtx.Provider value={{ value, updateValue }}>
+        <LazyMotion features={domAnimation}>
+          <Header />
+          <Metronome />
+        </LazyMotion>
+      </settingCtx.Provider>
+    </div>
   );
 }
