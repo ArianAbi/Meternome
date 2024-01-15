@@ -330,7 +330,12 @@ export default function IndividualBar({
             {possibleSubdivisons.map(({ value, img }, i) => {
               return (
                 <span
-                  className="flex flex-col justify-between items-center gap-4 text-center"
+                  className={`flex flex-col justify-between items-center gap-4 text-center px-6 py-4 rounded-md bg-opacity-5 transition-all duration-150
+                  ${
+                    selectedSubdivision === value
+                      ? "bg-white outline outline-2 outline-white"
+                      : "opacity-60"
+                  }`}
                   onClick={() => setSelectedSubdivisons(value)}
                   key={i}
                 >
