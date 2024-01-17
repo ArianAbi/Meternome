@@ -387,6 +387,7 @@ export default function IndividualBar({
                       scale: img === possibleSubdivisons[4].img ? "1.4" : "1",
                     }}
                   />
+                  <h3>{value}</h3>
                 </span>
               );
             })}
