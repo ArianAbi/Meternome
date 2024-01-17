@@ -146,7 +146,7 @@ export default function Metronome() {
               readOnly
             />
             <label title={`${index + 2}`}>{index + 2}</label>
-            <img src="/quarter-notes.png" className="h-5" />
+            <img src="notes/quarter-notes.png" className="h-5" />
           </div>
         ))}
       </DialogBox>
