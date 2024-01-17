@@ -364,13 +364,13 @@ export default function IndividualBar({
             {specials[index]} bar Subdivisons
           </span>
 
-          <div className="grid grid-cols-2 gap-8 mx-4">
+          <div className="grid grid-cols-2 gap-2 md:gap-4 mx-4">
             {/* mute subdivison */}
 
             {possibleSubdivisons.map(({ value, img }, i) => {
               return (
                 <span
-                  className={`flex flex-col justify-between items-center gap-4 text-center px-6 py-4 rounded-md bg-opacity-5 transition-all duration-150
+                  className={`flex flex-col justify-between items-center gap-4 text-center px-4 py-2 rounded-md bg-opacity-5 transition-all duration-150
                   ${
                     selectedSubdivision === value
                       ? "bg-white outline outline-2 outline-white"
@@ -381,7 +381,7 @@ export default function IndividualBar({
                 >
                   <img
                     src={img}
-                    className="h-12 max-w-xs col-span-full"
+                    className="h-10 md:h-12 max-w-xs col-span-full"
                     style={{
                       //increace the size of the image if its the dotted triplet image
                       scale: img === possibleSubdivisons[4].img ? "1.4" : "1",
