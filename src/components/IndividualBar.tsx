@@ -89,12 +89,14 @@ export default function IndividualBar({
 
   const possibleSubdivisons: { value: selectedSubdivisionType; img: string }[] =
     [
-      { value: "mute", img: "mute.png" },
-      { value: "quarter", img: "quarter-notes.png" },
-      { value: "eighth", img: "eighth-notes.png" },
-      { value: "triplet", img: "triplet-notes.png" },
-      { value: "doted-triplet", img: "doted-triplet-notes.png" },
-      { value: "sixteenth", img: "sixteenth-notes.png" },
+      { value: "mute", img: "notes/mute.png" },
+      { value: "quarter", img: "notes/quarter-notes.png" },
+      { value: "eighth", img: "notes/eighth-notes.png" },
+      { value: "triplet", img: "notes/triplet-notes.png" },
+      { value: "doted-triplet", img: "notes/doted-triplet-notes.png" },
+      { value: "sixteenth", img: "notes/sixteenth-notes.png" },
+      { value: "gallop", img: "notes/gallop-notes.png" },
+      { value: "rev-gallop", img: "notes/reverse-gallop-notes.png" },
     ];
 
   const specials = [
@@ -114,7 +116,9 @@ export default function IndividualBar({
     | "eighth"
     | "triplet"
     | "sixteenth"
-    | "doted-triplet";
+    | "doted-triplet"
+    | "gallop"
+    | "rev-gallop";
 
   const [selectedSubdivision, setSelectedSubdivisons] =
     useState<selectedSubdivisionType>(getSubdivisionFromPrefrence());
@@ -210,6 +214,42 @@ export default function IndividualBar({
           setTimeout(() => {
             playRegularTick();
           }, oneTriplet * 2);
+          break;
+
+        //Forward Gallop
+        case "gallop":
+          if (!accented) {
+            playRegularTick();
+          } else {
+            playAccentTick();
+          }
+
+          setTimeout(() => {
+            playRegularTick();
+          }, oneSixteenth);
+
+          setTimeout(() => {
+            playRegularTick();
+          }, oneSixteenth * 2);
+
+          break;
+
+        //Reverse Gallop
+        case "rev-gallop":
+          if (!accented) {
+            playRegularTick();
+          } else {
+            playAccentTick();
+          }
+
+          setTimeout(() => {
+            playRegularTick();
+          }, oneSixteenth * 2);
+
+          setTimeout(() => {
+            playRegularTick();
+          }, oneSixteenth * 3);
+
           break;
 
         default:
