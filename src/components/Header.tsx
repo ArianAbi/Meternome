@@ -8,7 +8,11 @@ export default function Header() {
   return (
     <>
       <header className="z-50 mb-2 flex w-full items-center justify-between px-4 py-3 text-center text-lg md:text-xl font-bold">
-        <a href="https://github.com/ArianAbi/MeternomeVite" title="github page">
+        <a
+          href="https://github.com/ArianAbi/MeternomeVite"
+          title="github page"
+          target="_blank"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
