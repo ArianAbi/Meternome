@@ -42,7 +42,7 @@ export default function Settings() {
           {sounds.map((_el, i) => {
             return (
               <div
-                className={`w-auto text-lg text-center aspect-square px-6 py-2 rounded-md bg-opacity-5 transition-all duration-150 flex flex-col items-center justify-start
+                className={`w-auto max-h-24 sm:h-28 text-lg text-center aspect-square px-6 py-2 rounded-md bg-opacity-5 transition-all duration-150 flex flex-col items-center justify-start
                 ${
                   sound === _el.sound
                     ? "bg-white outline outline-2 outline-white"
