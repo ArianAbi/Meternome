@@ -173,7 +173,7 @@ export default function Metronome() {
       <PendulumContainer>
         {/* play button */}
         <button
-          className={`absolute left-2/4 top-2/4 z-50 flex h-full w-full -translate-x-2/4 -translate-y-2/4 items-center justify-center
+          className={`absolute left-2/4 top-2/4 z-50 flex h-screen w-full -translate-x-2/4 -translate-y-2/4 items-center justify-center
             text-2xl font-bold text-white backdrop-blur-sm transition-opacity duration-300
             ${playing ? "opacity-0" : "opacity-100"}`}
           onClick={() => toggleMetronome()}
