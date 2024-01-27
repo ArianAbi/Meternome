@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useContext } from "react";
+import { motion } from "framer-motion";
 import * as Tone from "tone";
 import hh_regular from "/samples/hihat/hh_regular.mp3";
 import hh_accented from "/samples/hihat/hh_accented.mp3";
@@ -394,13 +395,21 @@ export default function IndividualBar({
           </div>
         </div>
 
-        <div
-          className="w-full flex justify-center gap-2 mt-2"
+        <motion.div
+          whileTap={{ scale: 1.2 }}
+          className="w-full flex justify-center items-center gap-2 mt-2"
           onClick={toggleAccented}
         >
-          <input readOnly checked={accented} type="checkbox" />
+          <input
+            className={`appearance-none w-3 aspect-square outline outline-[3px] outline-offset-2 outline-white m-2 ${
+              accented ? "bg-white" : ""
+            }`}
+            readOnly
+            checked={accented}
+            type="checkbox"
+          />
           <label>Accented</label>
-        </div>
+        </motion.div>
       </DialogBox>
     </>
   );
