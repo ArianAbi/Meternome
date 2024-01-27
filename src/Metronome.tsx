@@ -132,23 +132,31 @@ export default function Metronome() {
       <DialogBox open={timeSigDialogOpen} setOpen={setTimeSigDialogOpen}>
         <h1 className="mb-4 text-lg font-bold tracking-wide">Time Signuture</h1>
 
-        {Array.from({ length: 7 }, (_el, index) => (
-          <div
-            className="flex w-full gap-2 text-lg font-bold"
-            key={index}
-            onClick={() => setTimeSignature(index + 2)}
-          >
-            <input
-              type="radio"
-              name="timeSig"
-              checked={index + 2 === timeSignature}
-              value={index + 2}
-              readOnly
-            />
-            <label title={`${index + 2}`}>{index + 2}</label>
-            <img src="notes/quarter-notes.png" className="h-5" />
-          </div>
-        ))}
+        <div className="grid grid-cols-2 gap-3 mx-4">
+          {Array.from({ length: 7 }, (_el, index) => (
+            <div key={index} onClick={() => setTimeSignature(index + 2)}>
+              <div
+                className={`flex flex-col w-16 h-16 aspect-square relative text-lg rounded-md px-3 py-1 bg-opacity-5 ${
+                  index + 2 === timeSignature
+                    ? "bg-white outline outline-2 outline-white"
+                    : ""
+                }`}
+              >
+                <span
+                  className="w-full text-left font-semibold text-xl"
+                  title={`${index + 2}`}
+                >
+                  {/* time signuture */}
+                  {index + 2}
+                </span>
+
+                {/* static stuff */}
+                <span className="h-[2px] w-8 absolute -rotate-45 bg-white opacity-50 left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4"></span>
+                <span className="w-full text-right opacity-50">4</span>
+              </div>
+            </div>
+          ))}
+        </div>
       </DialogBox>
 
       <BarsSection
