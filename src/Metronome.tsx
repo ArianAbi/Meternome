@@ -133,7 +133,7 @@ export default function Metronome() {
         <h1 className="mb-4 text-lg font-bold tracking-wide">Time Signuture</h1>
 
         <div className="grid grid-cols-2 gap-3 mx-4">
-          {Array.from({ length: 7 }, (_el, index) => (
+          {Array.from({ length: 8 }, (_el, index) => (
             <div key={index} onClick={() => setTimeSignature(index + 2)}>
               <div
                 className={`flex flex-col w-16 h-16 aspect-square relative text-lg rounded-md px-3 py-1 bg-opacity-5 ${
