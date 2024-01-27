@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useContext } from "react";
+import { motion } from "framer-motion";
 import Controls from "./components/Controls";
 import { Pendulum, PendulumContainer } from "./components/Pendulum";
 import DialogBox from "./components/DialogBox";
@@ -134,16 +135,31 @@ export default function Metronome() {
 
         <div className="grid grid-cols-2 gap-3 mx-4">
           {Array.from({ length: 8 }, (_el, index) => (
-            <div key={index} onClick={() => setTimeSignature(index + 2)}>
+            <motion.div
+              whileTap={{ scale: 1.2 }}
+              key={index}
+              onClick={() => setTimeSignature(index + 2)}
+              className="cursor-pointer"
+            >
               <div
-                className={`flex flex-col w-16 h-16 aspect-square relative text-lg rounded-md px-3 py-1 bg-opacity-5 ${
+                className={`flex flex-col w-16 h-16 aspect-square relative text-lg rounded-md px-3 py-1 bg-opacity-5 overflow-hidden ${
                   index + 2 === timeSignature
-                    ? "bg-white outline outline-2 outline-white"
-                    : ""
+                    ? "bg-white outline outline-2 outline-white opacity-100"
+                    : "opacity-70"
                 }`}
               >
+                {!(index + 2 === timeSignature) && (
+                  <div
+                    className="absolute left-0 top-0 w-full h-full z-10"
+                    style={{
+                      background:
+                        "linear-gradient(0deg,rgba(0,0,0,1) 0%,rgba(0,0,0,0.3) 40%,rgba(0,0,0,0) 50%)",
+                    }}
+                  ></div>
+                )}
+
                 <span
-                  className="w-full text-left font-semibold text-xl"
+                  className="w-full text-center font-semibold text-xl"
                   title={`${index + 2}`}
                 >
                   {/* time signuture */}
@@ -151,10 +167,10 @@ export default function Metronome() {
                 </span>
 
                 {/* static stuff */}
-                <span className="h-[2px] w-8 absolute -rotate-45 bg-white opacity-50 left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4"></span>
-                <span className="w-full text-right opacity-50">4</span>
+                <hr className="opacity-75" />
+                <span className="w-full text-center opacity-75">4</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </DialogBox>
